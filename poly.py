@@ -96,6 +96,7 @@ class Node:
 
 
 class LinkedList:
+    """Linked list representing a polynomial."""
     def __init__(self):
         # You are also welcome to use a sentinel/dummy node!
         # It is definitely recommended, which will we learn more
@@ -161,7 +162,13 @@ class LinkedList:
 
     # Return a string representation of the polynomial.
     def __str__(self):
-        pass
+        if self.head is None:
+            return ""
+        poly_lst = []
+        while self.head:
+            poly_lst.append(f"({self.head.coeff}, {self.head.exp})")
+            self.head = self.head.next
+        return " + ".join(poly_lst)
 
 
 def main():
