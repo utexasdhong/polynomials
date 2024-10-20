@@ -111,7 +111,45 @@ class LinkedList:
     # If a term with that exponent already exists, add the coefficients together.
     # You must keep the terms in descending order by exponent.
     def insert_term(self, coeff, exp):
-        pass
+        """
+        Insert new node representing term into linked list representation
+        of polynomial. Terms must remain in descending order.
+        """
+        if coeff == 0:
+            return
+
+        new_node = Node(coeff, exp)
+
+        if self.head is None:
+            self.head = new_node
+            return
+
+        current = self.head
+        previous = None
+
+        while current.next is not None and current.exp > exp:
+            previous = current
+            current = current.next
+
+        if current.exp > exp:
+            new_node.next = current.next
+            current.next = new_node
+
+        if current.exp == exp:
+            current.coeff += coeff
+            if current.coeff == 0:
+                if previous is None:
+                    self.head = current.next
+                else:
+                    previous.next = current.next
+            return
+
+        if current.exp < exp:
+            new_node.next = current
+            if previous is not None:
+                previous.next = new_node
+            else:
+                self.head = new_node
 
     # Add a polynomial p to the polynomial and return the resulting polynomial as a new linked list.
     def add(self, p):
