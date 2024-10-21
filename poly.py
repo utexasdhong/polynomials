@@ -154,7 +154,37 @@ class LinkedList:
 
     # Add a polynomial p to the polynomial and return the resulting polynomial as a new linked list.
     def add(self, p):
-        pass
+        """Add polynomials, returning sum as a new linked list."""
+        left, right = self.head, p.head
+        current = dummy = Node(None, None)
+
+        while left is not None and right is not None:
+            if left.exp > right.exp:
+                current.next = Node(left.coeff, left.exp)
+                left = left.next
+            elif left.exp == right.exp:
+                new_coeff = left.coeff + right.coeff
+                if new_coeff == 0:
+                    left = left.next
+                    right = right.next
+                    continue
+                current.next = Node(new_coeff, left.exp)
+            else:
+                current.next = Node(right.coeff, right.exp)
+                right = right.next
+            current = current.next
+
+        if left is None:
+            while right is not None:
+                current.next = Node(right.coeff, right.exp)
+                right = right.next
+        else:
+            while left is not None:
+                current.next = Node(left.coeff, left.exp)
+                left = left.next
+
+        return dummy.next
+
 
     # Multiply a polynomial p with the polynomial and return the product as a new linked list.
     def mult(self, p):
